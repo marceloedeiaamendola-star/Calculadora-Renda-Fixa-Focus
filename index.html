@@ -32,6 +32,12 @@ input:focus{outline:2px solid #c4b5fd;border-color:var(--purple)}.readonly{backg
 .rgrid{display:grid;grid-template-columns:1fr 1fr;gap:4px}.rbox{padding:5px;border-radius:7px;background:#ffffff19;border:1px solid #ffffff24}.rbox span{display:block;color:#e9ddff;font-size:8px;line-height:1.1}.rbox b{display:block;font-size:11px;margin-top:2px}
 .explain{font-size:8px;color:#eee5ff;line-height:1.2;margin-top:4px}
 button{font:inherit;cursor:pointer}.reset{border:0;border-radius:18px;padding:6px 11px;background:var(--purple);color:#fff;font-weight:800;font-size:10px}
+.donate{position:fixed;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:50;border:1px solid #e9d5ff;border-radius:24px;padding:9px 13px;background:linear-gradient(135deg,#fff,#f3e8ff);color:var(--deep);font-weight:850;font-size:11px;box-shadow:0 3px 12px #32145b24;white-space:nowrap}
+.donation{max-width:520px;min-height:75vh;margin:10px auto;padding:22px 16px;background:#fff;border:2px solid var(--deep);border-radius:16px;box-shadow:0 5px 18px #32145b14;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.donation h2{margin:0;color:var(--deep);font-size:22px}.donation p{margin:0;color:var(--muted);font-size:13px;line-height:1.4}
+.qr{width:min(68vw,270px);height:auto;padding:7px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.back{border:0;border-radius:20px;padding:9px 17px;background:var(--purple);color:#fff;font-weight:800;font-size:12px}
+.hidden{display:none!important}
 .foot{text-align:center;color:var(--muted);font-size:8px;line-height:1.2;margin:5px 3px 0}.foot strong{color:var(--deep)}
 @media(max-width:390px){h1{font-size:20px}.sub{font-size:8px}.proj b{font-size:12px}.proj span{font-size:7px}.grid{gap:5px}}
 @media(max-height:850px) and (max-width:500px){body{padding-top:3px;padding-bottom:4px}main{padding-top:6px;padding-bottom:6px}header{padding-bottom:4px}.card{padding:6px;margin-bottom:5px}.status{margin-top:3px}.result{padding:7px}.equiv-box{padding:6px}.equiv-box b{font-size:20px}.rbox{padding:4px}.foot{margin-top:3px}}
@@ -83,6 +89,14 @@ button{font:inherit;cursor:pointer}.reset{border:0;border-radius:18px;padding:6p
 
 <div style="display:flex;justify-content:flex-start"><button class="reset" id="reset" type="button">↻ Reiniciar</button></div>
 <div class="foot"><strong>Não é recomendação de investimento.</strong><br>Idealizador: Marcelo Amendola · Versão 1.0</div>
+<button class="donate" id="donate" type="button">♥ Doar R$ 1</button>
+</main>
+<main id="donationPage" class="donation hidden">
+<h2>Apoie este projeto ♥</h2>
+<p>Se você gostou da calculadora, considere contribuir com R$ 1 via Pix.</p>
+<img class="qr" src="https://raw.githubusercontent.com/marceloedeiaamendola-star/Calculadora-Renda-Fixa/main/pix-doacao.png" alt="QR Code Pix para doação">
+<p>Obrigado por apoiar o desenvolvimento da Calculadora Renda Fixa Focus!</p>
+<button class="back" id="back" type="button">Voltar à calculadora</button>
 </main>
 <script>
 (()=> {
@@ -160,6 +174,8 @@ function calc(){
 document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('active',x===b));$('rate').value=mode==='lci'?90:100;calc()}));
 ['selic','rate','months'].forEach(id=>$(id).addEventListener('input',calc));
 $('reset').onclick=()=>{mode='lci';$('selic').value='13.75';$('rate').value='90';$('months').value='12';document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode==='lci'));calc()};
+$('donate').onclick=()=>{$('app').classList.add('hidden');$('donationPage').classList.remove('hidden');window.scrollTo(0,0)};
+$('back').onclick=()=>{$('donationPage').classList.add('hidden');$('app').classList.remove('hidden');window.scrollTo(0,0)};
 async function loadCurrentSelic(){
  try{
   const res=await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados/ultimos/1?formato=json',{cache:'no-store'});
