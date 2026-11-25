@@ -154,7 +154,7 @@ async function loadCurrentSelic(){
   const res=await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados/ultimos/1?formato=json',{cache:'no-store'});
   if(!res.ok)throw new Error('BCB indisponível');
   const data=await res.json(),v=Number(String(data[0].valor).replace(',','.'));
-  if(Number.isFinite(v)&&v>0){$('selic').value=v.toFixed(2);$('liveStatus').textContent='Selic atualizada pelo Banco Central · '+data[0].data+'. Campo editável; CDI = Selic − 0,10 p.p.';calc()}
+  if(Number.isFinite(v)&&v>0){$('selic').value=v.toFixed(2);$('liveStatus').textContent='Selic atualizada pelo Banco Central · '+data[0].data+' ';calc()}
  }catch(e){$('liveStatus').textContent='Não foi possível atualizar automaticamente.'}
 }
 calc();loadCurrentSelic();
