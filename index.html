@@ -6,31 +6,30 @@
 <link rel="apple-touch-icon" sizes="180x180" href="./focus-icon.svg"><link rel="icon" type="image/svg+xml" href="./focus-icon.svg">
 <title>Calculadora Renda Fixa Focus</title>
 <style>
-:root{--bg:#f5f3ff;--ink:#21143a;--muted:#716582;--line:#e5def2;--purple:#6d28d9;--deep:#4c1d95;--num:27px}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-body{padding:12px 10px 24px}main{max-width:520px;margin:auto;padding:13px 12px 18px;background:#fff;border:3px solid var(--deep);border-radius:20px;box-shadow:0 8px 28px #32145b18}
-header{padding:3px 3px 10px}h1{margin:0;color:var(--deep);font-size:26px;line-height:1.05;letter-spacing:-.6px}.sub{margin-top:4px;color:var(--muted);font-size:11px}
-.card{border:1px solid var(--line);border-radius:13px;padding:10px;margin:0 0 8px;background:#fff;box-shadow:0 2px 8px #32145b0a}
-.sect{font-size:10px;text-transform:uppercase;letter-spacing:.45px;font-weight:850;color:var(--deep);margin-bottom:8px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.field label{display:block;font-size:11px;font-weight:750;color:var(--muted);margin:0 0 4px}
-input{width:100%;min-width:0;border:1px solid #d7cce8;border-radius:9px;padding:7px 8px;color:var(--ink);font-size:var(--num);font-weight:800;height:43px;background:#fff}
-input:focus{outline:2px solid #c4b5fd;border-color:var(--purple)}
-.readonly{background:#f7f4fc;color:#4c1d95}
-.projections{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
-.proj{background:#f5f0ff;border:1px solid #e8defa;border-radius:9px;padding:7px 5px;text-align:center;min-width:0}
-.proj b{display:block;font-size:15px;color:var(--deep);white-space:nowrap}.proj span{display:block;font-size:9px;color:var(--muted);margin-top:2px}
-.status{font-size:10px;color:var(--muted);line-height:1.35;margin-top:7px}
-.modes{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#f0eafb;padding:4px;border-radius:10px;margin-bottom:8px}
-.mode{border:0;border-radius:7px;padding:8px 4px;background:transparent;color:var(--deep);font-weight:800;font-size:11px}
-.mode.active{background:#fff;box-shadow:0 1px 5px #30105c22}
-.notes{display:grid;grid-template-columns:1fr 1fr;gap:8px;color:var(--muted);font-size:10px;margin-top:5px}.notes span:last-child{text-align:right}
-.result{background:linear-gradient(135deg,#3b0764,#7c3aed);color:#fff;border-radius:13px;padding:11px;margin:0 0 8px}
-.result .muted{font-size:10px;color:#e9ddff;font-weight:700}.big{font-size:30px;font-weight:900;line-height:1.1;margin:3px 0 8px}
-.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.rbox{padding:7px;border-radius:8px;background:#ffffff19;border:1px solid #ffffff24}.rbox span{display:block;color:#e9ddff;font-size:9px;line-height:1.2}.rbox b{display:block;font-size:13px;margin-top:3px}
-.explain{font-size:10px;color:#eee5ff;line-height:1.35;margin-top:7px}
-button{font:inherit;cursor:pointer}.reset{border:0;border-radius:20px;padding:8px 14px;background:var(--purple);color:#fff;font-weight:800;font-size:11px}
-.foot{text-align:center;color:var(--muted);font-size:9px;line-height:1.4;margin:9px 4px 0}.foot strong{color:var(--deep)}
-@media(max-width:370px){h1{font-size:23px}.projections{gap:3px}.proj{padding:6px 2px}.proj b{font-size:13px}.grid{gap:6px}}
+:root{--bg:#f5f3ff;--ink:#21143a;--muted:#716582;--line:#e5def2;--purple:#6d28d9;--deep:#4c1d95;--num:23px}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:13px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{padding:5px 7px 8px}main{max-width:520px;margin:auto;padding:8px 8px 9px;background:#fff;border:2px solid var(--deep);border-radius:16px;box-shadow:0 5px 18px #32145b14}
+header{padding:1px 2px 6px}h1{margin:0;color:var(--deep);font-size:22px;line-height:1.02;letter-spacing:-.55px}.sub{margin-top:3px;color:var(--muted);font-size:9px;line-height:1.2}
+.card{border:1px solid var(--line);border-radius:11px;padding:7px;margin:0 0 6px;background:#fff;box-shadow:0 1px 5px #32145b08}
+.sect{font-size:9px;text-transform:uppercase;letter-spacing:.35px;font-weight:850;color:var(--deep);margin-bottom:5px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.field label{display:block;font-size:10px;font-weight:750;color:var(--muted);margin:0 0 3px}
+input{width:100%;min-width:0;border:1px solid #d7cce8;border-radius:8px;padding:5px 7px;color:var(--ink);font-size:var(--num);font-weight:800;height:36px;background:#fff}
+input:focus{outline:2px solid #c4b5fd;border-color:var(--purple)}.readonly{background:#f7f4fc;color:#4c1d95}
+.projections{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.proj{background:#f5f0ff;border:1px solid #e8defa;border-radius:8px;padding:3px 2px;text-align:center;min-width:0}
+.proj b{display:block;font-size:13px;color:var(--deep);white-space:nowrap}.proj span{display:block;font-size:8px;color:var(--muted);margin-top:1px}
+.status{font-size:9px;color:var(--muted);line-height:1.15;margin-top:3px}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#f0eafb;padding:3px;border-radius:8px;margin-bottom:5px}
+.mode{border:0;border-radius:6px;padding:6px 3px;background:transparent;color:var(--deep);font-weight:800;font-size:10px}.mode.active{background:#fff;box-shadow:0 1px 4px #30105c22}
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:6px;color:var(--muted);font-size:9px;margin-top:3px}.notes span:last-child{text-align:right}
+.result{background:linear-gradient(135deg,#3b0764,#7c3aed);color:#fff;border-radius:11px;padding:8px;margin:0 0 5px}
+.result .muted{font-size:9px;color:#e9ddff;font-weight:700}.big{font-size:25px;font-weight:900;line-height:1.05;margin:2px 0 5px}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:4px}.rbox{padding:5px;border-radius:7px;background:#ffffff19;border:1px solid #ffffff24}.rbox span{display:block;color:#e9ddff;font-size:8px;line-height:1.1}.rbox b{display:block;font-size:11px;margin-top:2px}
+.explain{font-size:8px;color:#eee5ff;line-height:1.2;margin-top:4px}
+button{font:inherit;cursor:pointer}.reset{border:0;border-radius:18px;padding:6px 11px;background:var(--purple);color:#fff;font-weight:800;font-size:10px}
+.foot{text-align:center;color:var(--muted);font-size:8px;line-height:1.2;margin:5px 3px 0}.foot strong{color:var(--deep)}
+@media(max-width:390px){h1{font-size:20px}.sub{font-size:8px}.proj b{font-size:12px}.proj span{font-size:7px}.grid{gap:5px}}
+@media(max-height:850px) and (max-width:500px){body{padding-top:3px;padding-bottom:4px}main{padding-top:6px;padding-bottom:6px}header{padding-bottom:4px}.card{padding:6px;margin-bottom:5px}.status{margin-top:3px}.result{padding:7px}.big{font-size:23px}.rbox{padding:4px}.foot{margin-top:3px}}
 </style></head>
 <body><main id="app">
 <header><h1>Calculadora Renda Fixa Focus</h1><div class="sub">Equivalência LCA / LCI × CDB · projeções de juros e capitalização mensal</div></header>
