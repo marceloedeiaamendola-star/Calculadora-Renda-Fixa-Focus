@@ -29,3 +29,6 @@ Versão independente da Calculadora Renda Fixa, com identidade visual roxa.
 As projeções são expectativas de mercado e não garantias de taxas futuras. O cronograma mensal de reduções é uma hipótese de simulação da calculadora, não uma previsão oficial de decisões do COPOM.
 
 Não é recomendação de investimento.
+
+
+Atualização de publicação: commit de disparo do workflow GitHub Pages.
