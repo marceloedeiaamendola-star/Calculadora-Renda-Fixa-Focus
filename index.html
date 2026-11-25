@@ -43,7 +43,7 @@ button{font:inherit;cursor:pointer}.reset{border:0;border-radius:20px;padding:8p
 </div>
 <div class="status" id="liveStatus">Selic inicial carregada. CDI calculado como Selic − 0,10 ponto percentual.</div>
 <div style="height:1px;background:var(--line);margin:9px 0"></div>
-<div class="sect">Mediana Focus · Selic em dezembro</div>
+
 <div class="projections">
 <div class="proj"><b>13,75%</b><span>Dez/2026</span><span>CDI 13,65%</span></div>
 <div class="proj"><b>13,00%</b><span>Dez/2027</span><span>CDI 12,90%</span></div>
@@ -75,7 +75,7 @@ button{font:inherit;cursor:pointer}.reset{border:0;border-radius:20px;padding:8p
 </section>
 
 <div style="display:flex;justify-content:flex-start"><button class="reset" id="reset" type="button">↻ Reiniciar</button></div>
-<div class="foot">Modelo: 8 reuniões do COPOM por ano; variações de 0,25 p.p. distribuídas para alcançar a Selic Focus de dezembro. Cada decisão passa a valer no mês seguinte, como aproximação mensal. CDI estimado = Selic − 0,10 p.p.<br><strong>Não é recomendação de investimento.</strong><br>Idealizador: Marcelo Amendola · Versão 1.0</div>
+<div class="foot"><strong>Não é recomendação de investimento.</strong><br>Idealizador: Marcelo Amendola · Versão 1.0</div>
 </main>
 <script>
 (()=> {
@@ -155,7 +155,7 @@ async function loadCurrentSelic(){
   if(!res.ok)throw new Error('BCB indisponível');
   const data=await res.json(),v=Number(String(data[0].valor).replace(',','.'));
   if(Number.isFinite(v)&&v>0){$('selic').value=v.toFixed(2);$('liveStatus').textContent='Selic atualizada pelo Banco Central · '+data[0].data+'. Campo editável; CDI = Selic − 0,10 p.p.';calc()}
- }catch(e){$('liveStatus').textContent='Não foi possível atualizar automaticamente. Edite a Selic inicial; CDI = Selic − 0,10 p.p.'}
+ }catch(e){$('liveStatus').textContent='Não foi possível atualizar automaticamente.'}
 }
 calc();loadCurrentSelic();
 })();
