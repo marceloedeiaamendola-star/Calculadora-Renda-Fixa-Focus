@@ -23,13 +23,18 @@ input:focus{outline:2px solid #c4b5fd;border-color:var(--purple)}.readonly{backg
 .mode{border:0;border-radius:6px;padding:6px 3px;background:transparent;color:var(--deep);font-weight:800;font-size:10px}.mode.active{background:#fff;box-shadow:0 1px 4px #30105c22}
 .notes{display:grid;grid-template-columns:1fr 1fr;gap:6px;color:var(--muted);font-size:9px;margin-top:3px}.notes span:last-child{text-align:right}
 .result{background:linear-gradient(135deg,#3b0764,#7c3aed);color:#fff;border-radius:11px;padding:8px;margin:0 0 5px}
-.result .muted{font-size:9px;color:#e9ddff;font-weight:700}.big{font-size:25px;font-weight:900;line-height:1.05;margin:2px 0 5px}
+.result .muted{font-size:9px;color:#e9ddff;font-weight:700}
+.equiv-pair{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:3px 0 7px}
+.equiv-box{min-width:0;padding:7px;border-radius:8px;background:#ffffff1c;border:1px solid #ffffff30}
+.equiv-box span{display:block;min-height:22px;line-height:1.15}
+.equiv-box b{display:block;font-size:23px;line-height:1.05;margin-top:3px;white-space:nowrap}
+.equiv-box small{display:block;color:#e9ddff;font-size:8px;line-height:1.15;margin-top:3px}
 .rgrid{display:grid;grid-template-columns:1fr 1fr;gap:4px}.rbox{padding:5px;border-radius:7px;background:#ffffff19;border:1px solid #ffffff24}.rbox span{display:block;color:#e9ddff;font-size:8px;line-height:1.1}.rbox b{display:block;font-size:11px;margin-top:2px}
 .explain{font-size:8px;color:#eee5ff;line-height:1.2;margin-top:4px}
 button{font:inherit;cursor:pointer}.reset{border:0;border-radius:18px;padding:6px 11px;background:var(--purple);color:#fff;font-weight:800;font-size:10px}
 .foot{text-align:center;color:var(--muted);font-size:8px;line-height:1.2;margin:5px 3px 0}.foot strong{color:var(--deep)}
 @media(max-width:390px){h1{font-size:20px}.sub{font-size:8px}.proj b{font-size:12px}.proj span{font-size:7px}.grid{gap:5px}}
-@media(max-height:850px) and (max-width:500px){body{padding-top:3px;padding-bottom:4px}main{padding-top:6px;padding-bottom:6px}header{padding-bottom:4px}.card{padding:6px;margin-bottom:5px}.status{margin-top:3px}.result{padding:7px}.big{font-size:23px}.rbox{padding:4px}.foot{margin-top:3px}}
+@media(max-height:850px) and (max-width:500px){body{padding-top:3px;padding-bottom:4px}main{padding-top:6px;padding-bottom:6px}header{padding-bottom:4px}.card{padding:6px;margin-bottom:5px}.status{margin-top:3px}.result{padding:7px}.equiv-box{padding:6px}.equiv-box b{font-size:20px}.rbox{padding:4px}.foot{margin-top:3px}}
 </style></head>
 <body><main id="app">
 <header><h1>Calculadora Renda Fixa Focus</h1><div class="sub">Equivalência LCA / LCI × CDB · projeções de juros e capitalização mensal</div></header>
@@ -63,7 +68,10 @@ button{font:inherit;cursor:pointer}.reset{border:0;border-radius:18px;padding:6p
 </section>
 
 <section class="result" aria-live="polite">
-<div class="muted" id="eqLabel">CDB equivalente</div><div class="big" id="equiv">—</div>
+<div class="equiv-pair">
+<div class="equiv-box"><span class="muted" id="eqLabel">CDB pós-fixado equivalente</span><b id="equiv">—</b></div>
+<div class="equiv-box"><span class="muted">CDB prefixado equivalente</span><b id="prefixRate">—</b><small>% a.a. · capitalização mensal</small></div>
+</div>
 <div class="rgrid">
 <div class="rbox"><span>Montante líquido LCA / LCI</span><b id="lciFinal">—</b></div>
 <div class="rbox"><span>Montante líquido CDB equivalente</span><b id="cdbFinal">—</b></div>
@@ -137,8 +145,12 @@ function calc(){
   equivalent=solveRate(monthly,target,0,false);
   lf=1000*grossFactor(monthly,equivalent);
  }
- $('eqLabel').textContent=mode==='lci'?'CDB equivalente':'LCA / LCI equivalente';
+ $('eqLabel').textContent=mode==='lci'?'CDB pós-fixado equivalente':'LCA / LCI equivalente';
  $('equiv').textContent=pct(equivalent);
+ const fixedGrossFactor=1+(cf/1000-1)/(1-t);
+ const fixedMonthly=Math.pow(fixedGrossFactor,1/m)-1;
+ const fixedAnnual=(Math.pow(1+fixedMonthly,12)-1)*100;
+ $('prefixRate').textContent=pct(fixedAnnual);
  $('lciFinal').textContent=money(lf);
  $('cdbFinal').textContent=money(cf);
  $('ir').textContent=pct(t*100);
