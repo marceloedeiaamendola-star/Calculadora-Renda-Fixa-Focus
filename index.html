@@ -28,7 +28,7 @@ input:focus{outline:2px solid #c4b5fd;border-color:var(--purple)}.readonly{backg
 .equiv-box{min-width:0;padding:7px;border-radius:8px;background:#ffffff1c;border:1px solid #ffffff30}
 .equiv-box span{display:block;min-height:22px;line-height:1.15}
 .equiv-box b{display:block;font-size:23px;line-height:1.05;margin-top:3px;white-space:nowrap}
-.equiv-box small{display:block;color:#e9ddff;font-size:8px;line-height:1.15;margin-top:3px}
+.equiv-box small{display:block;color:#e9ddff;font-size:8px;line-height:1.15;margin-top:3px}.prefix-box{background:#ffffff2b;border-color:#ffffff66}
 .rgrid{display:grid;grid-template-columns:1fr 1fr;gap:4px}.rbox{padding:5px;border-radius:7px;background:#ffffff19;border:1px solid #ffffff24}.rbox span{display:block;color:#e9ddff;font-size:8px;line-height:1.1}.rbox b{display:block;font-size:11px;margin-top:2px}
 .explain{font-size:8px;color:#eee5ff;line-height:1.2;margin-top:4px}
 button{font:inherit;cursor:pointer}.reset{border:0;border-radius:18px;padding:6px 11px;background:var(--purple);color:#fff;font-weight:800;font-size:10px}
@@ -69,8 +69,8 @@ button{font:inherit;cursor:pointer}.reset{border:0;border-radius:18px;padding:6p
 
 <section class="result" aria-live="polite">
 <div class="equiv-pair">
-<div class="equiv-box"><span class="muted" id="eqLabel">CDB pós-fixado equivalente</span><b id="equiv">—</b></div>
-<div class="equiv-box"><span class="muted">CDB prefixado equivalente</span><b id="prefixRate">—</b><small>% a.a. · capitalização mensal</small></div>
+<div class="equiv-box"><span class="muted" id="eqLabel">CDB PÓS-FIXADO</span><b id="equiv">—</b><small>% do CDI</small></div>
+<div class="equiv-box prefix-box"><span class="muted">CDB PREFIXADO</span><b id="prefixRate">—</b><small>% a.a. · juros compostos mensais</small></div>
 </div>
 <div class="rgrid">
 <div class="rbox"><span>Montante líquido LCA / LCI</span><b id="lciFinal">—</b></div>
@@ -145,7 +145,7 @@ function calc(){
   equivalent=solveRate(monthly,target,0,false);
   lf=1000*grossFactor(monthly,equivalent);
  }
- $('eqLabel').textContent=mode==='lci'?'CDB pós-fixado equivalente':'LCA / LCI equivalente';
+ $('eqLabel').textContent=mode==='lci'?'CDB PÓS-FIXADO':'LCA / LCI EQUIVALENTE';
  $('equiv').textContent=pct(equivalent);
  const fixedGrossFactor=1+(cf/1000-1)/(1-t);
  const fixedMonthly=Math.pow(fixedGrossFactor,1/m)-1;
