@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f3ff"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="icon" type="image/svg+xml" href="./focus-icon-purple.svg?v=3">
+<title>Calculadora Renda Fixa Focus</title>
+<style>
+:root{--bg:#f5f3ff;--ink:#21143a;--muted:#716582;--line:#e5def2;--purple:#6d28d9;--deep:#4c1d95;--num:23px}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:13px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{padding:5px 7px 8px}main{max-width:520px;margin:auto;padding:8px 8px 9px;background:#fff;border:2px solid var(--deep);border-radius:16px;box-shadow:0 5px 18px #32145b14}
+header{padding:1px 2px 6px}h1{margin:0;color:var(--deep);font-size:22px;line-height:1.02;letter-spacing:-.55px}.sub{margin-top:3px;color:var(--muted);font-size:9px;line-height:1.2}
+.card{border:1px solid var(--line);border-radius:11px;padding:7px;margin:0 0 6px;background:#fff;box-shadow:0 1px 5px #32145b08}
+.sect{font-size:9px;text-transform:uppercase;letter-spacing:.35px;font-weight:850;color:var(--deep);margin-bottom:5px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.field label{display:block;font-size:10px;font-weight:750;color:var(--muted);margin:0 0 3px}
+input{width:100%;min-width:0;border:1px solid #d7cce8;border-radius:8px;padding:5px 7px;color:var(--ink);font-size:var(--num);font-weight:800;height:36px;background:#fff}
+input:focus{outline:2px solid #c4b5fd;border-color:var(--purple)}.readonly{background:#f7f4fc;color:#4c1d95}
+.projections{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.proj{background:#f5f0ff;border:1px solid #e8defa;border-radius:8px;padding:3px 2px;text-align:center;min-width:0}
+.proj b{display:block;font-size:13px;color:var(--deep);white-space:nowrap}.proj span{display:block;font-size:8px;color:var(--muted);margin-top:1px}
+.status{font-size:9px;color:var(--muted);line-height:1.15;margin-top:3px}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#f0eafb;padding:3px;border-radius:8px;margin-bottom:5px}
+.mode{border:0;border-radius:6px;padding:6px 3px;background:transparent;color:var(--deep);font-weight:800;font-size:10px}.mode.active{background:#fff;box-shadow:0 1px 4px #30105c22}
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:6px;color:var(--muted);font-size:9px;margin-top:3px}.notes span:last-child{text-align:right}
+.result{background:linear-gradient(135deg,#3b0764,#7c3aed);color:#fff;border-radius:11px;padding:8px;margin:0 0 5px}
+.result .muted{font-size:9px;color:#e9ddff;font-weight:700}
+.equiv-pair{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:3px 0 7px}
+.equiv-box{min-width:0;padding:7px;border-radius:8px;background:#ffffff1c;border:1px solid #ffffff30}
+.equiv-box span{display:block;min-height:22px;line-height:1.15}
+.equiv-box b{display:block;font-size:23px;line-height:1.05;margin-top:3px;white-space:nowrap}
+.equiv-box small{display:block;color:#e9ddff;font-size:8px;line-height:1.15;margin-top:3px}.prefix-box{background:#ffffff2b;border-color:#ffffff66}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:4px}.rbox{padding:5px;border-radius:7px;background:#ffffff19;border:1px solid #ffffff24}.rbox span{display:block;color:#e9ddff;font-size:8px;line-height:1.1}.rbox b{display:block;font-size:11px;margin-top:2px}
+.explain{font-size:8px;color:#eee5ff;line-height:1.2;margin-top:4px}
+button{font:inherit;cursor:pointer}.reset{border:0;border-radius:18px;padding:6px 11px;background:var(--purple);color:#fff;font-weight:800;font-size:10px}
+.donate{position:fixed;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:50;border:1px solid #e9d5ff;border-radius:24px;padding:9px 13px;background:linear-gradient(135deg,#fff,#f3e8ff);color:var(--deep);font-weight:850;font-size:11px;box-shadow:0 3px 12px #32145b24;white-space:nowrap}
+.donation{max-width:520px;min-height:75vh;margin:10px auto;padding:22px 16px;background:#fff;border:2px solid var(--deep);border-radius:16px;box-shadow:0 5px 18px #32145b14;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.donation h2{margin:0;color:var(--deep);font-size:22px}.donation p{margin:0;color:var(--muted);font-size:13px;line-height:1.4}
+.qr{width:min(68vw,270px);height:auto;padding:7px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.back{border:0;border-radius:20px;padding:9px 17px;background:var(--purple);color:#fff;font-weight:800;font-size:12px}
+.hidden{display:none!important}
+.foot{text-align:center;color:var(--muted);font-size:8px;line-height:1.2;margin:5px 3px 0}.foot strong{color:var(--deep)}
+@media(max-width:390px){h1{font-size:20px}.sub{font-size:8px}.proj b{font-size:12px}.proj span{font-size:7px}.grid{gap:5px}}
+@media(max-height:850px) and (max-width:500px){body{padding-top:3px;padding-bottom:4px}main{padding-top:6px;padding-bottom:6px}header{padding-bottom:4px}.card{padding:6px;margin-bottom:5px}.status{margin-top:3px}.result{padding:7px}.equiv-box{padding:6px}.equiv-box b{font-size:20px}.rbox{padding:4px}.foot{margin-top:3px}}
+</style><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Renda Fixa Focus">
+</head>
+<body><main id="app">
+<header><h1>Calculadora Renda Fixa Focus</h1><div class="sub">Equivalência LCA / LCI × CDB · projeções de juros e capitalização mensal</div></header>
+
+<section class="card">
+<div class="sect">Selic e expectativas Focus · % ao ano</div>
+<div class="grid">
+<div class="field"><label for="selic">Selic inicial (editável)</label><input id="selic" type="text" inputmode="decimal" value="13,75"></div>
+<div class="field"><label for="cdiNow">CDI correspondente</label><input id="cdiNow" class="readonly" type="text" readonly value="13,65%"></div>
+</div>
+<div class="status" id="liveStatus">Selic inicial carregada. CDI calculado como Selic − 0,10 ponto percentual.</div>
+<div style="height:1px;background:var(--line);margin:9px 0"></div>
+
+<div class="projections">
+<div class="proj"><b>13,75%</b><span>Dez/2026</span><span>CDI 13,65%</span></div>
+<div class="proj"><b>13,00%</b><span>Dez/2027</span><span>CDI 12,90%</span></div>
+<div class="proj"><b>11,00%</b><span>Dez/2028</span><span>CDI 10,90%</span></div>
+<div class="proj"><b>10,50%</b><span>Dez/2029</span><span>CDI 10,40%</span></div>
+</div>
+
+</section>
+
+<section class="card">
+<div class="sect">Informe o investimento conhecido</div>
+<div class="modes"><button class="mode active" data-mode="lci">Tenho LCA / LCI</button><button class="mode" data-mode="cdb">Tenho CDB</button></div>
+<div class="grid">
+<div class="field"><label for="rate">Rentabilidade (% do CDI)</label><input id="rate" type="text" inputmode="decimal" value="90"></div>
+<div class="field"><label for="months">Prazo (meses)</label><input id="months" type="number" min="1" max="600" step="1" value="12"></div>
+</div>
+<div class="notes"><span>Percentual contratado do CDI</span><span>Prazo da aplicação</span></div>
+</section>
+
+<section class="result" aria-live="polite">
+<div class="equiv-pair">
+<div class="equiv-box"><span class="muted" id="eqLabel">CDB PÓS-FIXADO</span><b id="equiv">—</b><small>% do CDI</small></div>
+<div class="equiv-box prefix-box"><span class="muted">CDB PREFIXADO</span><b id="prefixRate">—</b><small>% a.a. · juros compostos mensais</small></div>
+</div>
+<div class="rgrid">
+<div class="rbox"><span>Montante líquido LCA / LCI</span><b id="lciFinal">—</b></div>
+<div class="rbox"><span>Montante líquido CDB equivalente</span><b id="cdbFinal">—</b></div>
+<div class="rbox"><span>IR do CDB no resgate</span><b id="ir">—</b></div>
+<div class="rbox"><span>Rendimento líquido</span><b id="gain">—</b></div>
+</div>
+<div class="explain" id="explain">Montantes calculados sobre R$ 1.000,00, com capitalização composta mensal e trajetória estimada do CDI.</div>
+</section>
+
+<div style="display:flex;justify-content:flex-start"><button class="reset" id="reset" type="button">↻ Reiniciar</button></div>
+<div class="foot"><strong>Não é recomendação de investimento.</strong><br>Idealizador: Marcelo Amendola · Versão 1.0</div>
+<button class="donate" id="donate" type="button">♥ Doar R$ 1</button>
+</main>
+<main id="donationPage" class="donation hidden">
+<h2>Apoie este projeto ♥</h2>
+<p>Se você gostou da calculadora, considere contribuir com R$ 1 via Pix.</p>
+<img class="qr" src="https://raw.githubusercontent.com/marceloedeiaamendola-star/Calculadora-Renda-Fixa/main/pix-doacao.png" alt="QR Code Pix para doação">
+<p>Obrigado por apoiar o desenvolvimento da Calculadora Renda Fixa Focus!</p>
+<button class="back" id="back" type="button">Voltar à calculadora</button>
+</main>
+<script>
+(()=> {
+const $=id=>document.getElementById(id);
+const money=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const pct=n=>n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%';
+const decimalValue=id=>{const raw=$(id).value.trim().replace(/\\s/g,'').replace(',','.');return raw===''?NaN:Number(raw)};
+const formatDecimalInput=id=>{const n=decimalValue(id);if(Number.isFinite(n))$(id).value=n.toLocaleString('pt-BR',{maximumFractionDigits:6});};
+const targets={2027:13.00,2028:11.00,2029:10.50};
+const meetingMonths=[1,3,4,6,8,9,10,12];
+let mode='lci',currentSelic=13.75;
+const tax=m=>m*30<=180?.225:m*30<=360?.20:m*30<=720?.175:.15;
+
+// Constrói as taxas mensais a partir da Selic inicial e das medianas Focus de dezembro.
+// Cada reunião pode alterar a taxa em passos de 0,25 p.p.; o último ajuste fecha exatamente a meta anual.
+function monthlyRates(start,months){
+ let out=[],rate=start;
+ for(let y=2027;y<=2029 && out.length<months;y++){
+  const target=targets[y],delta=target-rate,abs=Math.abs(delta);
+  const full=Math.floor(abs/0.25+1e-8),rem=abs-full*0.25;
+  const n=full+(rem>1e-7?1:0),events=new Map();
+  for(let k=0;k<n;k++){
+   const ix=Math.min(7,Math.floor((k+0.5)*8/n)),meeting=meetingMonths[ix];
+   const step=(k<full?0.25:rem)*Math.sign(delta);
+   events.set(meeting,(events.get(meeting)||0)+step);
+  }
+  for(let m=1;m<=12 && out.length<months;m++){
+   if(m>1 && events.has(m-1)) rate+=events.get(m-1);
+   const cdi=Math.max(0,rate-0.10);
+   out.push(Math.pow(1+cdi/100,1/12)-1);
+  }
+  rate=target;
+ }
+ const last=Math.pow(1+(targets[2029]-0.10)/100,1/12)-1;
+ while(out.length<months)out.push(last);
+ return out;
+}
+function grossFactor(monthly,pctCDI){return monthly.reduce((acc,r)=>acc*(1+r*pctCDI/100),1)}
+function netCdbFactor(monthly,pctCDI,t){return 1+(grossFactor(monthly,pctCDI)-1)*(1-t)}
+function solveRate(monthly,targetFactor,t,forCdb){
+ let lo=0,hi=500;
+ for(let i=0;i<90;i++){
+  const mid=(lo+hi)/2;
+  const f=forCdb?netCdbFactor(monthly,mid,t):grossFactor(monthly,mid);
+  if(f<targetFactor)lo=mid;else hi=mid;
+ }
+ return (lo+hi)/2;
+}
+function calc(){
+ const start=decimalValue('selic'),r=decimalValue('rate'),m=Math.floor(Number($('months').value));
+ if(!Number.isFinite(start)||start<0||start>50||!Number.isFinite(r)||r<0||!Number.isFinite(m)||m<1||m>600){$('equiv').textContent='Confira os dados';return}
+ $('cdiNow').value=pct(Math.max(0,start-.10));
+ const monthly=monthlyRates(start,m),t=tax(m),inputFactor=grossFactor(monthly,r);
+ let equivalent,lf,cf;
+ if(mode==='lci'){
+  lf=1000*inputFactor;
+  equivalent=solveRate(monthly,inputFactor,t,true);
+  cf=1000*netCdbFactor(monthly,equivalent,t);
+ }else{
+  cf=1000*netCdbFactor(monthly,r,t);
+  const target=cf/1000;
+  equivalent=solveRate(monthly,target,0,false);
+  lf=1000*grossFactor(monthly,equivalent);
+ }
+ $('eqLabel').textContent=mode==='lci'?'CDB PÓS-FIXADO':'LCA / LCI EQUIVALENTE';
+ $('equiv').textContent=pct(equivalent);
+ const fixedGrossFactor=1+(cf/1000-1)/(1-t);
+ const fixedMonthly=Math.pow(fixedGrossFactor,1/m)-1;
+ const fixedAnnual=(Math.pow(1+fixedMonthly,12)-1)*100;
+ $('prefixRate').textContent=pct(fixedAnnual);
+ $('lciFinal').textContent=money(lf);
+ $('cdbFinal').textContent=money(cf);
+ $('ir').textContent=pct(t*100);
+ $('gain').textContent=money((mode==='lci'?lf:cf)-1000);
+ $('explain').textContent='Montante sobre R$ 1.000,00 · '+m+' '+(m===1?'mês':'meses')+' · CDI mensal composto · taxa informada '+pct(r)+' do CDI. '+(m>36?'Após dez/2029, mantida a taxa terminal Focus de 10,50% a.a.':'');
+}
+document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('active',x===b));$('rate').value=mode==='lci'?90:100;calc()}));
+['selic','rate','months'].forEach(id=>$(id).addEventListener('input',calc));
+['selic','rate'].forEach(id=>$(id).addEventListener('blur',()=>{formatDecimalInput(id);calc()}));
+$('reset').onclick=()=>{mode='lci';$('selic').value='13,75';$('rate').value='90';$('months').value='12';document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode==='lci'));calc()};
+$('donate').onclick=()=>{$('app').classList.add('hidden');$('donationPage').classList.remove('hidden');window.scrollTo(0,0)};
+$('back').onclick=()=>{$('donationPage').classList.add('hidden');$('app').classList.remove('hidden');window.scrollTo(0,0)};
+async function loadCurrentSelic(){
+ try{
+  const res=await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados/ultimos/1?formato=json',{cache:'no-store'});
+  if(!res.ok)throw new Error('BCB indisponível');
+  const data=await res.json(),v=Number(String(data[0].valor).replace(',','.'));
+  if(Number.isFinite(v)&&v>0){$('selic').value=v.toFixed(2).replace('.',',');$('liveStatus').textContent='Selic atualizada pelo Banco Central · '+data[0].data+' ';calc()}
+ }catch(e){$('liveStatus').textContent='Não foi possível atualizar automaticamente.'}
+}
+calc();loadCurrentSelic();
+})();
+</script></body></html>
