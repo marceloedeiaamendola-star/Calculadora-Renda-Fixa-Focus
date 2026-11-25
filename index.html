@@ -89,38 +89,6 @@ const tax=m=>m*30<=180?.225:m*30<=360?.20:m*30<=720?.175:.15;
 
 // Constrói as taxas mensais a partir da Selic inicial e das medianas Focus de dezembro.
 // Cada reunião pode alterar a taxa em passos de 0,25 p.p.; o último ajuste fecha exatamente a meta anual.
-function buildMonthlyCDI(start,months){
- let monthly=[],rate=start,year=2027,month=1;
- while(monthly.length<months){
-  if(month===1 && year>2027) rate=targets[year-1]??rate;
-  const target=targets[year];
-  const delta=target-rate;
-  const steps=Math.floor(Math.abs(delta)/0.25+1e-8);
-  const remainder=Math.abs(delta)-steps*0.25;
-  const total=steps+(remainder>1e-7?1:0);
-  const changes=new Map();
-  for(let k=0;k<total;k++){
-   const meetingIndex=Math.min(7,Math.round((k+1)*8/total)-1);
-   const m=meetingMonths[meetingIndex];
-   const change=(k<steps?0.25:remainder)*Math.sign(delta);
-   changes.set(m,(changes.get(m)||0)+change);
-  }
-  for(let m=1;m<=12 && monthly.length<months;m++){
-   // A decisão de uma reunião passa a valer a partir do mês seguinte.
-   if(m>1 && changes.has(m-1)) rate-=changes.get(m-1)*Math.sign(target-(rate)); // replaced below by signed stored delta
-   const annualCDI=Math.max(0,rate-0.10);
-   const effectiveMonthly=Math.pow(1+annualCDI/100,1/12)-1;
-   monthly.push(effectiveMonthly);
-  }
-  // Fecha a taxa do ano para iniciar o próximo ano exatamente na mediana Focus.
-  rate=target; year++; month=1;
-  if(!targets[year]) break;
- }
- // Se o prazo ultrapassar 2029, mantém a taxa terminal de 2029.
- const terminal=Math.pow(1+(targets[2029]-0.10)/100,1/12)-1;
- while(monthly.length<months) monthly.push(terminal);
- return monthly;
-}
 function monthlyRates(start,months){
  let out=[],rate=start;
  for(let y=2027;y<=2029 && out.length<months;y++){
@@ -128,12 +96,12 @@ function monthlyRates(start,months){
   const full=Math.floor(abs/0.25+1e-8),rem=abs-full*0.25;
   const n=full+(rem>1e-7?1:0),events=new Map();
   for(let k=0;k<n;k++){
-   const ix=Math.min(7,Math.round((k+1)*8/n)-1),meeting=meetingMonths[ix];
+   const ix=Math.min(7,Math.floor((k+0.5)*8/n)),meeting=meetingMonths[ix];
    const step=(k<full?0.25:rem)*Math.sign(delta);
    events.set(meeting,(events.get(meeting)||0)+step);
   }
   for(let m=1;m<=12 && out.length<months;m++){
-   if(m>1 && events.has(m-1)) rate-=events.get(m-1);
+   if(m>1 && events.has(m-1)) rate+=events.get(m-1);
    const cdi=Math.max(0,rate-0.10);
    out.push(Math.pow(1+cdi/100,1/12)-1);
   }
