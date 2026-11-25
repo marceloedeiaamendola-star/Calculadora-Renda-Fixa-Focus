@@ -1,4 +1,4 @@
-name: Deploy Calculadora Renda Fixa Focus to GitHub Pages
+name: Publicar Calculadora Renda Fixa Focus
 
 on:
   push:
@@ -6,33 +6,24 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  actions: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: gh-pages
+  cancel-in-progress: false
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload site artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Publicar arquivos na branch gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: .
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./
+          force_orphan: true
+          exclude_assets: '.github'
